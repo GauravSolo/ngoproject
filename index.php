@@ -263,7 +263,7 @@ if(isset($_SESSION['id']))
               <div class="progress-bar progress-bar-animated progress-bar-striped" style="border-radius:100px;width:50%;" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </div>
-          <div class="col-12 <?php echo !$_SESSION['role']?'target':''; ?>" id="targetparent">
+          <div class="col-12 <?php echo isset($_SESSION['id'])?(!$_SESSION['role']?'target':''):''; ?>" id="targetparent">
             Raised <span class="percentage"><?php echo $data['funds']; ?> Rs</span>
             <span class="float-end">Target <span id="target"><?php echo $row2['targetmoney']; ?></span> Rs</span>
         </div>
