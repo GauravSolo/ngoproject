@@ -9,7 +9,7 @@ if(isset($_SESSION['id']))
   else
     $logout = 0;
 
-  if(!isset($_COOKIE['user']))
+  if(!isset($_COOKIE['user']) && !isset($_SESSION['id']))
   {
     setcookie('user','yes',time()+(60*60*24*30));
     mysqli_query($conn,"UPDATE sitedata SET total_user=total_user+1");    

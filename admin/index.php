@@ -326,7 +326,7 @@ include "header.php";
                                                         
                                                       }
                                                     }
-                                                    echo  echo "<script> 
+                                                    echo "<script> 
                                                     document.querySelector('.descedit').onclick = ()=>{
                                                       // console.log('clicked');
                                                       var [descvideotd,description,targetmoneytd] = [...document.querySelectorAll('.descvideo,.description,.targetmoney')];
