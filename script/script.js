@@ -79,6 +79,34 @@ var swiper = new Swiper(".mySwiper", {
      element.parentElement.parentElement.parentElement.parentElement.classList.remove('modal');
    });
  });
+var i = 0;
+ document.querySelectorAll('.eyes i').forEach((element)=>{
+   element.addEventListener('click',()=>{
+     document.querySelectorAll('.eyes i')[0].classList.toggle('visible');
+     document.querySelectorAll('.eyes i')[1].classList.toggle('visible');
+     document.querySelectorAll('.eyes i')[2].classList.toggle('visible');
+     document.querySelectorAll('.eyes i')[3].classList.toggle('visible');
+    
+     if(i > 1)
+        i = 0;
+     if(i == 0)
+     {
+          document.getElementById('inputuserpassword').setAttribute('type','text');
+          document.getElementById('inputpassword').setAttribute('type','text');
+     }else{ 
+          document.getElementById('inputuserpassword').setAttribute('type','password');       
+          document.getElementById('inputpassword').setAttribute('type','password');
+     }
+     i++;
+     
+     
+     
+    
+   });
+ });
+
+
+
 
 var sm = document.getElementById('sm');
 var frame = document.querySelector('.src');
@@ -86,6 +114,8 @@ var frame = document.querySelector('.src');
     document.querySelector("button[name='signupsubmit']").onclick = (e)=>{
           // frame.classList.add('frame');
           e.preventDefault();
+           document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
       document.querySelector("button[name='signupsubmit']").innerHTML = `
           <div class="spinner-border" style="width:24px;height:24px;" role="status">
           <span class="visually-hidden" >Loading...</span>
@@ -114,8 +144,9 @@ var frame = document.querySelector('.src');
               if(xhr.status === 200)
               {
                   var res = xhr.response;
+                  console.log(res);
                   sm.innerHTML = res.res;
-                  setTimeout(()=>{sm.innerHTML=""},1500);
+                  setTimeout(()=>{sm.innerHTML=""},5000);
   				  document.querySelector("button[name='signupsubmit']").innerHTML="Submit";
                   document.querySelector("input[name='inputusername']").value = "";
                   document.querySelector("input[name='inputemail']").value = "";
@@ -125,6 +156,7 @@ var frame = document.querySelector('.src');
           
           const form = document.getElementById('ff');
           const formdata = new FormData(form);
+         
           xhr.send(formdata);
 
     }          
@@ -161,7 +193,7 @@ var frame = document.querySelector('.src');
                                 if(res.ok == '1')
                                   window.location.href = 'admin/index.php';
                               },1000);
-                            document.querySelector("button[name='loginsubmit']").innerHTML="Log in";
+                            
 
                           }
                       };

@@ -7,14 +7,13 @@
       include "config.php";
       header("Location: {$host}");
     }
+    ini_set('memory_limit', '512M');
 
-     if($_FILES['profilepic']['size'] == 0 || $_FILES['profilepic']['name'] == "")
+     if($_FILES['profilepic']['size'] == 0 )
     {
 		$image_name = '';
       	$error = "no image";
     }else{
-       echo "error occured";
-       die();
             $file_name = $_FILES['profilepic']['name'];
             $file_size = $_FILES['profilepic']['size'];
             $file_tmp = $_FILES['profilepic']['tmp_name'];
@@ -35,6 +34,11 @@
                 {
                   $error = "File size must be 10mb or lower";
                 }
+                
+                
+                
+                
+                
                 if($file_size > 1000000)
                 {
                   if($file_type == 'image/jpeg')
@@ -43,7 +47,28 @@
                   }elseif($file_type == 'image/png'){
                     $img = imagecreatefrompng($file_tmp);
                   }
+                  
+                  if($file_type == 'image/jpeg' || $file_type == 'image/png' ){
+                        $exif = exif_read_data($_FILES['profilepic']['tmp_name']);
+                        if (!empty($exif['Orientation'])) {
+                             // provided that the image is jpeg. Use relevant function otherwise
+                            switch ($exif['Orientation']) {
+                                case 3:
+                                $img = imagerotate($img, 180, 0);
+                                break;
+                                case 6:
+                                $img = imagerotate($img, -90, 0);
+                                break;
+                                case 8:
+                                $img = imagerotate($img, 90, 0);
+                                break;
+                                default:
+                                $img = $img;
+                            } 
+                        }
+                  }
 
+                  
                   if(isset($img)){
                     imagejpeg($img,$file_tmp,30);
                   }
@@ -98,7 +123,10 @@
 
     if($result)
     {
+      if($same == '1')
         echo json_encode(array('int'=>'1','name'=>$image_name,'username'=>$name,'mail'=>$mail,'same'=>$same));
+      else
+        echo json_encode(array('int'=>'1','name'=>$image_name,'username'=>$name,'mail'=>$mail,'same'=>'0'));
     }else{
         echo json_encode(array('int'=>'0'));
     }

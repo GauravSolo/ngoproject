@@ -8,7 +8,8 @@
 
      
     include "config.php";
-    $sql3 = "SELECT * FROM usersdata WHERE user_id = {$_SESSION['id']}";
+   $sql3 = "SELECT * FROM usersdata JOIN donation ON usersdata.contactid = donation.email WHERE usersdata.user_id = {$_SESSION['id']}";
+   
     $result3 = mysqli_query($conn,$sql3) or die("couldnt run query --> fetching data");
 
     if(isset($_GET['chat']))
@@ -19,8 +20,6 @@
       $chat = 0;
     }
     $rows3 = mysqli_fetch_assoc($result3);
-
-
 
 
     if(isset($_POST['submiteditvideo'])){
@@ -125,7 +124,8 @@ include "header.php";
 <script>
   var session = '<?php echo $_SESSION['mailid'];?>';
 </script>
-
+ <canvas id='confetti-holder' class="canva"  style='position:absolute;width:100vw;height:100vh;z-index:999;'></canvas>
+ 
 <div class="container-fluid px-0">
  
 <div class="row ">
@@ -174,7 +174,7 @@ include "header.php";
                 </div>
             </div>
             <div class="name">
-                    <h3 id="usr" ><?php echo $rows3["username"];?></h3>
+                    <h3 id="usr" style="text-align:center;" ><?php echo $rows3["username"];?></h3>
                     <span id='usrmail' ><?php echo $rows3["contactid"];?></span>
             </div>
         </div>
@@ -224,6 +224,7 @@ include "header.php";
                                         <th scope="col">city</th>
                                         <th scope="col">money</th>
                                         <th scope="col">date</th>
+                                        <th scope="col">image</th>
                                         <th scope="col">edit</th>
                                         <th scope="col">delete</th>
                                       </tr>
@@ -249,6 +250,7 @@ include "header.php";
                                         <td data-id='<?php echo $rows['user_id'];?>'><?php echo $rows['city']; ?></td>
                                         <td data-id='<?php echo $rows['user_id'];?>'><?php echo $rows['money']; ?></td>
                                         <td><?php echo $rows['date']; ?></td>
+                                        <td data-id='<?php echo $rows['user_id'];?>'><?php echo $rows['image']; ?></td>
                                         <td class='edit' data-id='<?php echo $rows['user_id'];?>' ><a href="#" ><i class='fa fa-edit'></i></a></td>
                                         <td class='delete' data-id='<?php echo $rows['user_id'];?>'><a href="#" ><i class='fa fa-trash'></i></a></td>
                                       </tr>
@@ -485,10 +487,13 @@ include "header.php";
 
                     <?php }?>
 
-                    <div class="tab-pane fade <?php echo (!$_SESSION['role'] && !$chat )?"show active":"";?> " style="min-height:100vh;" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane fade <?php echo isset($_SESSION['id'])?((!$_SESSION['role'] && !$chat )?"show active":""):'';?> " style="min-height:100vh;" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                         
                                         
                     <div class="container">
+                                           <div id="canvatext">
+
+                                          </div>
                                           <div class="row d-flex flex-column flex-sm-row align-items-baseline justify-content-center" style="margin-top:80px;">
                                             <div class="col statistics ">
 
@@ -518,18 +523,28 @@ include "header.php";
                                                 <div class="card-body bg-info px-0">
                                                   
                                                     <div class="main-wrapper1 flex-wrap card-title d-flex flex-column  flex-sm-row align-items-center align-items-sm-stretch justify-content-center flex-wrap">
-                                                        <div class="badge silver">
-                                                          <div class="circle"><i class="fa fa-user fa-street-view"></i></div>
-                                                          <div class="ribbon">INITIATOR</div>
-                                                        </div>  
-                                                        <?php 
-                                                        if($rows3['money']  != 0){
-                                                          ?>
-                                                        <div class="badge yellow">
-                                                          <div class="circle"> <i class="fa fa-bolt"></i></div>
-                                                          <div class="ribbon">Supporter</div>
-                                                        </div>                    
-                                                        <?php } ?>                                 
+                                                        <?php
+                                                          $sqlb = "SELECT badge FROM  badges;";
+
+                                                          if($resultb = mysqli_query($conn,$sqlb))
+                                                          {
+                                                            $badges = mysqli_num_rows($resultb);
+                                                            $i = 0;
+                                                            
+                                                            
+                                                                while($rowb = mysqli_fetch_assoc($resultb)){
+
+                                                                   echo $rowb['badge'];
+
+                                                                  $i++;
+                                                                  if($i  > $rows3['times'])
+                                                                    break;
+                                                                 
+                                                                }
+                                                                
+                                                          }
+                                                    ?>
+                             
                                                     </div> 
                                                 </div>
                                               </div>       
@@ -543,7 +558,7 @@ include "header.php";
                                                   <div class="col">
 
                                                     <div class="main-wrapper">
-                                                        <h1 style="border-bottom:2px solid black;color:#ed2d2d;"> BADGES </h1>
+                                                        <!-- <h1 style="border-bottom:2px solid black;color:#ed2d2d;"> BADGES </h1>
                                                         <div class="badge silver">
                                                           <div class="circle"><i class="fa fa-user fa-street-view"></i></div>
                                                           <div class="ribbon">INITIATOR</div>
@@ -585,7 +600,22 @@ include "header.php";
                                                         <div class="badge gold">
                                                           <div class="circle"> <i class="fa fa-magic"></i></div>
                                                           <div class="ribbon">Support</div>
-                                                        </div>
+                                                        </div>-->
+                                                        <h1 style="border-bottom:2px solid black;color:#ed2d2d;"> BADGES </h1>
+                                                        <?php
+                                                                 $sqlba = "SELECT badge FROM  badges;";
+                                                                 
+                                                                 if( $resultba = mysqli_query($conn,$sqlba))
+                                                                 {                                                                 
+                                                                   while($rowba = mysqli_fetch_assoc($resultba)){
+                                                                     
+                                                                     echo $rowba['badge'];
+                                                                     
+                                                                    }
+                                                                  }else{
+                                                                    echo $sqlba.'couldnt run ';
+                                                                  }
+                                                        ?>
                                                     </div>
                                             
                                                   </div>
@@ -620,17 +650,23 @@ include "header.php";
                                               <div class="col">
                                                 
                                               <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                                                <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                  <div class="mt-2">
+                                                <div class="text-center w-100 text-sm-left mb-2 mb-sm-0" style="margin:0 auto;">
+                                                
+                                                <div style="position:relative; width:100px;margin:0 auto;border-radius:50%;height:100px;display:flex;justify-content:center;align-items:center;">
+                                                  <img src="../upload/<?php echo $rows3["image"];?>" onclick="popimg()" id="chimg" alt="" style="border-radius:50%;width:100%;height:100%;" class="img-fluid">
+                                                <i class="fa fa-fw fa-camera"  onclick="popimg()" id="imgicon" style="position: absolute;font-size: 1.2rem;color: lightgoldenrodyellow;"></i>
+                                                </div>
+
+
+                                                  <div class="mt-2 d-none">
                                                     <label class="text-start w-100 mb-3">Change Photo</label>
                                                     <br>
-                                                    <button class="btn btn-primary" type="button">
-                                                      <i class="fa fa-fw fa-camera"></i>
+                                                    <button class="btn btn-primary w-100 d-flex justify-content-left align-items-center" type="button">
+                                                      <i class="fa fa-fw fa-camera me-2"></i>
                                                       <span><input type="file" id="fileinput" name="profilepic"></span>
                                                     </button>
                                                   </div>
                                                 </div>
-                                              
                                               </div>
 
 
@@ -728,7 +764,7 @@ include "header.php";
 
 
                   <div class="row" style="border:2px solid #ccc;">
-                    <div class="col-12" id="chatbox" style="height:60vh;overflow-y:scroll;">
+                    <div class="col-12" id="chatbox" style="overflow-y:scroll;">
                                  
                     </div>
 
@@ -749,6 +785,13 @@ include "header.php";
 </div>
 
 </div>
+<script type='text/javascript' src='../confettijs/dist/index.js'></script>
 <?php
+
 include "footer.php";
+if(isset($_GET['status']))
+{
+  echo "<script>startcanva(); console.log('ok');</script>";
+}
+
 ?>

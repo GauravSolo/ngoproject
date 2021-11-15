@@ -19,6 +19,7 @@
           $_SESSION['id'] = $rows['user_id'];
           $_SESSION['mailid'] = $rows['contactid'];
           $_SESSION['role'] = $rows['role'];
+          $_SESSION['name'] = $rows['username'];
           $error = "<div class='alert alert-success m-0 p-0' style='font-size:18px;' role='alert'>You've successfully logged in!</div>";
           echo json_encode(array('res'=>$error,'ok'=>'1'));
         }

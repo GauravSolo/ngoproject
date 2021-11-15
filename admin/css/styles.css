@@ -71,6 +71,10 @@ nav ~ div{
 
 
 
+#chatbox{
+  height:70vh;
+}
+
 
 
 @media only screen and (max-width:600px){
@@ -126,6 +130,9 @@ nav ~ div{
 
             .statistics{
               margin-bottom: 35px;
+            }
+            #chatbox{
+              height:50vh;
             }
 
 }
@@ -415,3 +422,10 @@ td::-webkit-scrollbar-thumb,tr::-webkit-scrollbar-thumb {
   opacity: .5;
 }
 
+.canva{
+  display: none;
+}
+
+#chimg,#imgicon{
+  cursor:pointer;
+}

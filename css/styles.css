@@ -55,6 +55,20 @@ nav{
     }
 }
 
+.eyes{
+    position:relative;
+}
+.eyes i{
+        position: absolute;
+        right: 20px;
+        top: 65%;
+        font-size: 18px;
+        visibility:hidden;
+}
+
+.visible{
+    visibility: visible;
+}
 
 
 #description, #progressbar,#ourwork,#ourteam,#faq{

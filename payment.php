@@ -1,15 +1,18 @@
 <?php
-    
+    session_start();
+    header("Pragma: no-cache");
+    header("Cache-Control: no-cache");
+    header("Expires: 0");
 ?>
 
 
-<!doctype html>
+<!doctype  html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="GENERATOR" content="Evrsoft First Page">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
@@ -20,9 +23,11 @@
     <link rel="stylesheet" href="admin/css/styles.css">
 
     <title>ngo project</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8114351997003577"
+     crossorigin="anonymous"></script>
   </head>
   <body>
-
+<canvas id='confetti-holder' class="canva"  style='position:absolute;width:100vw;height:100vh;z-index:999;'></canvas>
   <div class="row ">
   <div class="col nav-bar">
        <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -46,6 +51,7 @@
               </ul>
               <form class="d-flex">
                 <?php
+                  session_start();
                 if($_SESSION['role']){
                 ?>
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -80,36 +86,72 @@
         </div>
     </div>
 
-    <div class="card box2 shadow-sm order-1 order-sm-5">
-        <div class="d-flex align-items-center justify-content-between p-md-5 p-4"> <span class="h5 fw-bold m-0">Payment </span>
-        </div>
-        <ul class="nav nav-tabs mb-3 px-md-4 px-2">
-            <li class="nav-item"> <a class="nav-link px-2 active" aria-current="page" href="#">Mobile Payment</a> </li>
+    <div class="card box2 shadow-sm order-1 order-sm-5" style="border-bottom-left-radius:15px;border-bottom-right-radius:15px;">
+        <!-- <div class="d-flex align-items-center justify-content-between p-md-5 p-4"> <span class="h5 fw-bold m-0">Payment </span>
+        </div> -->
+        <ul class="nav nav-tabs mb-3 px-md-4 px-2 d-flex justify-content-center">
+            <li class="nav-item w-100"> <a class="nav-link px-2 active w-100 text-center" style="font-size:20px;" aria-current="page" href="#">Payment</a> </li>
         </ul>
-        <div class="px-md-5 px-4 mb-4 ">
-            <div class="row">
-                <div class="number">
-                    <span class="minus">-</span>
-                    <input type="text" value="50"/>
-                    <span class="plus">+</span>
-                </div>
-            </div>
-        </div>
-        <form action="">
-            <div class="row">
+        
+         <form method="post" action="">      
+
+                  <?php
+                          if(isset($_SESSION['id']))
+                          {
+                            $disable = 'disabled';
+                          }else{
+                            $disable = "";
+                          }
+                  ?>
+
                 <div class="col-12">
-                    <div class="d-flex flex-column px-md-5 px-4 mb-4"> <span class="mb-3">Phonepe | Paytm | Gpay</span>
-                        <div class="inputWithIcon"> <input class="form-control fs-4" value="9548523294"  type="text" disabled> </div>
+                    <div class="d-flex flex-column px-md-5 px-4 mb-4"> 
+                      <span class="h5 m-0" style="font-size:15px;">Name</span>
+                        <div class="inputWithIcon"> <input type="text" class="form-control" name="username" autocomplete="off" value="<?php echo isset($_SESSION['id'])?$_SESSION['name']:'';?>" require >
+                        </div>
                     </div>
                 </div>
-               
+
                 <div class="col-12">
-                    <div class="d-flex flex-column px-md-5 px-4 mb-4"> <span>Or click on this <a href="https://instamojo.com/@gauravsolo" target="_blank" style="" >link</a></span>
-                        <div class="inputWithIcon">  <span class="far fa-user"></span> </div>
+                    <div class="d-flex flex-column px-md-5 px-4 mb-4"> 
+                      <span class="h5 m-0" style="font-size:15px;">Email</span>
+                        <div class="inputWithIcon"> <input id="email" type="text" class="form-control"  tabindex="2" autocomplete="off" value="<?php echo isset($_SESSION['id'])?$_SESSION['mailid']:'';?>" require <?php echo $disable; ?>>
+                        </div>
                     </div>
                 </div>
+
+                <div class="col-12">
+                    <div class="d-flex flex-column px-md-5 px-4 mb-4"> 
+                      <span class="h5 m-0" style="font-size:15px;">Phone</span>
+                        <div class="inputWithIcon"> <input id="CUST_ID" type="text" class="form-control"  tabindex="2"  name="CUST_ID" autocomplete="off" value="" require >
+                        </div>
+                    </div>
+                </div>
+
+                <input name="ss" value="<?php echo isset($_SESSION['id'])?'yes':'no';?>" hidden>
+
+                <div class="col-12">
+                    <div class="d-flex flex-row px-md-5 px-4 mb-4"> 
+                      <span class="mb-2 h5 fw-bold m-0 d-flex" style="color:#a37474;padding-top:10px;padding-top:4px;padding-right:8px;">DONATION</span>
+                      <div class="number ms-auto" >
+                            <span class="minus">-</span>
+                            <input type="text" value="30" title='TXN_AMOUNT' style="max-width:65px;margin-left:auto;" disabled/>
+                            <span class="plus">+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="d-flex flex-column px-md-5 px-4 mb-4 text-end">
+                       
+                    </div>
+                </div>
+
                 <div class="col-12 px-md-5 px-4 mt-3">
-                    <div class="btn btn-primary w-100 " style="opacity:.5;cursor:not-allowed;">Pay</div>
+                    <input class="btn btn-primary w-100 " id="rzp-button1" type="submit" value="CheckOut">
+                </div>
+                <div id="sm"  class="text-warning" style="height:167px;">
+
                 </div>
             </div>
         </form>
@@ -120,7 +162,9 @@
 
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="script/paymentscript.js"></script>
+   <script type="text/javascript" src="confettijs/dist/index.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="script/paymentscript.js"></script>
   <!-- Option 1: Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js" ></script>  

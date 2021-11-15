@@ -9,7 +9,7 @@ if(isset($_SESSION['id']))
   else
     $logout = 0;
 
-  if(!isset($_COOKIE['user']) && !isset($_SESSION['id']))
+  if(!isset($_COOKIE['user']))
   {
     setcookie('user','yes',time()+(60*60*24*30));
     mysqli_query($conn,"UPDATE sitedata SET total_user=total_user+1");    
@@ -54,9 +54,11 @@ if(isset($_SESSION['id']))
                        </label>
                       <input type="text" name="inputemail" class="form-control" id="inputemail" required>
                     </div>
-                   <div>
+                   <div class="eyes">
                        <label for="inputpassword" class="form-label">Password</label>
                        <input type="password" name='inputpassword' class="form-control" id="inputpassword" required>
+                       <i class="fas fa-eye " ></i>
+                       <i class="fas fa-eye-slash visible" ></i>
                    </div>
                    <div>
                        <label for="inputcity" class="form-label">City</label>
@@ -101,9 +103,11 @@ if(isset($_SESSION['id']))
                        <label for="inputnameemail" class="form-label">Email</label>
                        <input type="text" name='inputnameemail' class="form-control" id="inputnameemail" required>
                    </div>
-                    <div>
+                    <div class="eyes">
                        <label for="inputuserpassword" class="form-label">Password</label>
                        <input type="password" name='inputuserpassword' class="form-control" id="inputuserpassword" required>
+                       <i class="fas fa-eye"></i>
+                       <i class="fas fa-eye-slash visible"></i>
                    </div>
                    <div>
                        <button type="submit" name='loginsubmit' class="btn btn-primary form-control">Log in</button>
@@ -437,12 +441,12 @@ if(isset($_SESSION['id']))
     <span style="color:yellow;font-size:25px;text-align:center;display:block;">Supporters</span>
       <marquee width="100%" direction="left" height="40px" style="border:2px dashed #fff30d;color:#48fd00; display:flex; align-items:center;font-weight:bold;">
         <ul style="display:flex;list-style:number;width:300px;justify-content:space-between;">
-        <?php 
-           $sqls = "SELECT username,money FROM usersdata WHERE money > 0;";
+       <?php 
+           $sqls = "SELECT username,amount FROM donation WHERE amount > 0 ORDER BY amount DESC";
            $results = mysqli_query($conn,$sqls) or die("couldnt run query--> supporters");
            while($rowss = mysqli_fetch_assoc($results)){
         
-                echo "<li>".$rowss['username']." ".$rowss['money']."rs</li>";
+                echo "<li class='me-5'>".$rowss['username']." ".$rowss['amount']."rs</li>";
 
             }
             ?>

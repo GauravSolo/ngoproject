@@ -8,7 +8,7 @@ class Chat implements MessageComponentInterface {
 
     public function __construct() {
         $this->clients = new \SplObjectStorage;
-        // echo "server started";
+        echo "server started";
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -30,9 +30,8 @@ class Chat implements MessageComponentInterface {
 
 
             // include "../config.php";
-            $conn = mysqli_connect('localhost','root','12345','NGO');
-            $host = 'http://localhost/';
-
+            $conn = mysqli_connect('127.0.0.1:49861','azure','6#vWHD_$','localdb');
+            $host = 'https://freengo.ml/';
             
             if($sno == -1)
             {

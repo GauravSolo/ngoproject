@@ -229,4 +229,7 @@ form .btn.btn-primary:hover {
     display: inline-block;
     vertical-align: middle;
 }
-    
+ 
+ .canva{
+    display: none;
+}

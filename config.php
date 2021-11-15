@@ -1,5 +1,5 @@
 <?php
 
-    $conn = mysqli_connect('localhost','root','12345','NGO');
-    $host = 'http://localhost/';
+    $conn = mysqli_connect('localhost','root','12345','localdb');
+    $host = 'http://localhost/ngoajax/';
 ?>
