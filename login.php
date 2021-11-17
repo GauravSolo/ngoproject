@@ -8,7 +8,7 @@
       {
         $lname = mysqli_real_escape_string($conn,$_POST['inputnameemail']);
         $lpass = mysqli_real_escape_string($conn,$_POST['inputuserpassword']);
-        $sql = "SELECT user_id,contactid,role FROM usersdata WHERE contactid = '{$lname}' AND password = '{$lpass}'";
+        $sql = "SELECT user_id,username,contactid,role FROM usersdata WHERE contactid = '{$lname}' AND password = '{$lpass}'";
         $result = mysqli_query($conn,$sql) or die("couldnt run query");
         if(mysqli_num_rows($result) > 0)
         {
