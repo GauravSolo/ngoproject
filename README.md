@@ -17,12 +17,12 @@ https://freengo.ml
 ### Desktop view
 
 <p>
-<img src="https://freengo.ml/projectimages/16.png" width="400px;">
-<img src="https://freengo.ml/projectimages/15.png" width="400px;"> 
-<img src="https://freengo.ml/projectimages/11.png" width="400px;"> 
-<img src="https://freengo.ml/projectimages/12.png" width="400px;">
-<img src="https://freengo.ml/projectimages/13.png" width="400px;"> 
-<img src="https://freengo.ml/projectimages/14.png" width="400px;">
+<img src="https://freengo.ml/projectimages/16.png" width="300px;">
+<img src="https://freengo.ml/projectimages/15.png" width="300px;"> 
+<img src="https://freengo.ml/projectimages/11.png" width="300px;"> 
+<img src="https://freengo.ml/projectimages/12.png" width="300px;">
+<img src="https://freengo.ml/projectimages/13.png" width="300px;"> 
+<img src="https://freengo.ml/projectimages/14.png" width="300px;">
 </p>
 
 
