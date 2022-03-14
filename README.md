@@ -17,12 +17,12 @@ https://freengo.ml
 ### Desktop view
 
 <p>
-<img src="https://freengo.ml/projectimages/16.png" width="300px;">
-<img src="https://freengo.ml/projectimages/15.png" width="300px;"> 
-<img src="https://freengo.ml/projectimages/11.png" width="300px;"> 
-<img src="https://freengo.ml/projectimages/12.png" width="300px;">
-<img src="https://freengo.ml/projectimages/13.png" width="300px;"> 
-<img src="https://freengo.ml/projectimages/14.png" width="300px;">
+<img src="images/projectimages/16.png" width="300px;">
+<img src="images/projectimages/15.png" width="300px;"> 
+<img src="images/projectimages/11.png" width="300px;"> 
+<img src="images/projectimages/12.png" width="300px;">
+<img src="images/projectimages/13.png" width="300px;"> 
+<img src="images/projectimages/14.png" width="300px;">
 </p>
 
 
@@ -33,14 +33,14 @@ https://freengo.ml
 
 ### Mobile view
 <p>
-<img src="https://freengo.ml/projectimages/1.jpg" width="200px;">
-<img src="https://freengo.ml/projectimages/4.jpg" width="200px;"> 
-<img src="https://freengo.ml/projectimages/5.jpg" width="200px;"> 
-<img src="https://freengo.ml/projectimages/6.jpg" width="200px;">
-<img src="https://freengo.ml/projectimages/7.jpg" width="200px;"> 
-<img src="https://freengo.ml/projectimages/8.jpg" width="200px;"> 
-<img src="https://freengo.ml/projectimages/9.jpg" width="200px;">
-<img src="https://freengo.ml/projectimages/10.jpg" width="200px;"> 
+<img src="images/projectimages/1.jpg" width="200px;">
+<img src="images/projectimages/4.jpg" width="200px;"> 
+<img src="images/projectimages/5.jpg" width="200px;"> 
+<img src="images/projectimages/6.jpg" width="200px;">
+<img src="images/projectimages/7.jpg" width="200px;"> 
+<img src="images/projectimages/8.jpg" width="200px;"> 
+<img src="images/projectimages/9.jpg" width="200px;">
+<img src="images/projectimages/10.jpg" width="200px;"> 
 </p>
 
 
