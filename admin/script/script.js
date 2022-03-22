@@ -226,7 +226,7 @@ document.querySelector('#sendbutton').onclick = ()=>{
         return;
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST','chat.php',true);
+        xhr.open('POST','talk.php',true);
         // xhr.setRequestHeader('Content-Type','multipart/formdata');
         xhr.responseType = 'json';
         xhr.onload = ()=>{
@@ -258,56 +258,63 @@ input.addEventListener("keyup", function(event) {
     document.getElementById("sendbutton").click();
   }
 });
-var mychat;
+var mytalk;
 
-function startchat(){
-     mychat =  setInterval(()=>{
-                    var tpost = document.querySelectorAll("#chatbox > div").length;
-                    console.log(tpost);
+
+
+function fetchtalk(){
+        var tpost = document.querySelectorAll("#chatbox > div").length;
+        console.log(tpost);
+    
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST','retrievetalk.php',true);
+        // xhr.setRequestHeader('Content-Type','multipart/formdata');
+        xhr.responseType = 'json';
+        xhr.onload = ()=>{
+            if(xhr.status === 200)
+            {
+                var res = xhr.response;
+                // console.log(res,xhr.responseType);
                 
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('POST','retrievechat.php',true);
-                    // xhr.setRequestHeader('Content-Type','multipart/formdata');
-                    xhr.responseType = 'json';
-                    xhr.onload = ()=>{
-                        if(xhr.status === 200)
-                        {
-                            var res = xhr.response;
-                            // console.log(res,xhr.responseType);
-                            
-                            document.querySelector("#chatbox").innerHTML = res.res;
-                
-                            if(res.bottom === '1')
-                            {
-                                // document.querySelector("#chatbox").scrollTo(0,document.body.scrollHeight);
-                                scrollSmoothToBottom('chatbox');
-                                function scrollSmoothToBottom (id) {
-                                    var div = document.getElementById(id);
-                                    $('#' + id).animate({
-                                       scrollTop: div.scrollHeight - div.clientHeight
-                                    }, 500);
-                                 }
-                                // console.log("ok");
-                            }
-                        }
-                    };
-                    var formdata = new FormData();
-                    formdata.append("tpost",tpost);
-                    xhr.send(formdata);
-                    
-                },1500);
-                console.log(mychat);
+                document.querySelector("#chatbox").innerHTML = res.res;
+                deleteFunction();
+    
+                if(res.bottom === '1')
+                {
+                    // document.querySelector("#chatbox").scrollTo(0,document.body.scrollHeight);
+                    scrollSmoothToBottom('chatbox');
+                    function scrollSmoothToBottom (id) {
+                        var div = document.getElementById(id);
+                        $('#' + id).animate({
+                           scrollTop: div.scrollHeight - div.clientHeight
+                        }, 500);
+                     }
+                    // console.log("ok");
+                }
+            }
+        };
+        var formdata = new FormData();
+        formdata.append("tpost",tpost);
+        xhr.send(formdata);
+
 }
-startchat();
+
+function starttalk(){
+     mytalk =  setInterval(fetchtalk,2500);
+                console.log(mytalk);
+}
+fetchtalk();
+starttalk();
+
 
 document.querySelectorAll('#myTab li').forEach((element)=>{
    element.addEventListener('click',()=>{
        var tab = document.querySelector('#contact-tab');
        if(tab.getAttribute('aria-selected') === 'true')
        {
-           startchat();
+           starttalk();
        }else if(tab.getAttribute('aria-selected') === 'false'){
-           clearInterval(mychat);
+           clearInterval(mytalk);
        }
    }) ;
 });
@@ -315,33 +322,33 @@ document.querySelectorAll('#myTab li').forEach((element)=>{
 
 
 
-setTimeout(()=>{
-    
-    document.querySelectorAll('#chatbox button.delete').forEach((element)=>{
-        element.addEventListener("click",()=>{
-        // console.log("clicked");
-        var msg_id = element.getAttribute('data-id');
-        
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST','deletechat.php',true);
-        // xhr.setRequestHeader('Content-Type','multipart/formdata');
-        xhr.responseType = 'json';
-        xhr.onload = ()=>{
-                if(xhr.status === 200)
-                {
-                        var res = xhr.response;
-                        // console.log(res);
-                
+    function deleteFunction(){
+        document.querySelectorAll('#chatbox button.delete').forEach((element)=>{
+            element.addEventListener("click",()=>{
+            console.log("clicked");
+            var msg_id = element.getAttribute('data-id');
+            
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST','deletetalk.php',true);
+            // xhr.setRequestHeader('Content-Type','multipart/formdata');
+            xhr.responseType = 'json';
+            xhr.onload = ()=>{
+                    if(xhr.status === 200)
+                    {
+                            var res = xhr.response;
+                            // console.log(res);
+                    
                     }
-                };
-                
-                const formdata = new FormData();
-                formdata.append('ctd',msg_id);
-                xhr.send(formdata);
-                
-            });
+                    };
+                    
+                    const formdata = new FormData();
+                    formdata.append('ctd',msg_id);
+                    xhr.send(formdata);
+                    
+                });
         });
-},1000);
+    }
+
         
 
 

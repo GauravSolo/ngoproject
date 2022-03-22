@@ -51,10 +51,20 @@ var swiper = new Swiper(".mySwiper", {
  document.querySelector('.outerdiv').style = `height:${scrollableheight}px;`;
 
 
- var [signupmodal, loginmodal] = [...document.querySelectorAll('.outerdiv')];
+ var [signupmodal, loginmodal, forgotmodal] = [...document.querySelectorAll('.outerdiv')];
  var [login, signup] = [...document.querySelectorAll('.logbutton')];
 
-
+ let forgotbtn = document.querySelector('.forgotbtn');
+ let forgotlogin = document.querySelector('.forgotlogin');
+ 
+ forgotbtn.addEventListener('click', ()=>{
+  loginmodal.classList.remove('modal');
+  forgotmodal.classList.add('modal');
+})
+ forgotlogin.addEventListener('click', ()=>{
+  loginmodal.classList.add('modal');
+  forgotmodal.classList.remove('modal');
+})
  login.addEventListener('click',()=>{
 
     loginmodal.classList.add('modal');
@@ -144,7 +154,7 @@ var frame = document.querySelector('.src');
               if(xhr.status === 200)
               {
                   var res = xhr.response;
-                  console.log(res);
+                  // console.log(res);
                   sm.innerHTML = res.res;
                   setTimeout(()=>{sm.innerHTML=""},5000);
   				  document.querySelector("button[name='signupsubmit']").innerHTML="Submit";
@@ -237,3 +247,56 @@ var frame = document.querySelector('.src');
         pageBottom.scrollIntoView()
       });
 
+console.log('clicked');
+let fp = document.querySelector('#fp');
+let forgototp = document.querySelector('#sendotp');
+forgototp.addEventListener('click',(e)=>{
+  e.preventDefault();
+  console.log('clicked');
+
+  
+        var umail = document.querySelector("input[name='forgotemail']").value;
+
+        if(umail === '')
+        {
+            fp.innerHTML="<div class='alert alert-warning m-0' role='alert'>Please Enter Email!</div>";
+            setTimeout(()=>{fp.innerHTML=""},1500);
+            return;
+        }
+        forgototp.innerHTML = `
+        <div class="spinner-border" style="width:24px;height:24px; white-space:nowrap;" role="status">
+       <span class="visually-hidden" >Loading...</span>
+       </div>
+       <div class="ms-3" style="font-size:20px;">Loading...</div>
+       `;
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST','forgotpassword.php',true);
+            xhr.responseType = 'json';
+            xhr.onload = ()=>{
+                if(xhr.status === 200)
+                {
+                    var res = xhr.response;
+                    fp.innerHTML = res.res;
+                    setTimeout(()=>{
+                      fp.innerHTML=""
+                      // if(res.ok == '1')
+                      //   window.location.href = 'admin/index.php';
+                    },1000);
+
+                    if(res.error == '0'){
+                      console.log(res.error, res.res);
+                    }else if(res.error == '1'){
+                      console.log(res.error, res.res);
+                    }else if(res.error == '2'){
+                      console.log(res.error, res.res);
+                    }
+                    forgototp.innerHTML = `Send OTP`;
+                }
+            };
+            
+            // const form = document.getElementById('fpwd');
+            const formdata = new FormData();
+            formdata.append('forgotemail',umail);
+            xhr.send(formdata);
+});

@@ -109,10 +109,38 @@ if(isset($_SESSION['id']))
                        <i class="fas fa-eye"></i>
                        <i class="fas fa-eye-slash visible"></i>
                    </div>
+                   <div  class="form-text text-end pe-2"><a href="#" class="text-primary forgotbtn">Forgot Password</a></div>
                    <div>
                        <button type="submit" name='loginsubmit' class="btn btn-primary form-control">Log in</button>
                    </div>
                    <div  class="form-text text-center">Create Account! <a href="#" class="text-primary logbutton">Sign up</a></div>
+               </form>
+           </div>
+        </div>
+    </div>
+
+    <!-- forgot password -->
+    <div class="container-fluid outerdiv">
+       <div class="row">
+           <div class="col mx-auto formcol">
+               <form class="signupform" id='fpwd'>
+                   <button type="button" class="btn-close" aria-label="Close"></button>
+                   <div class="row">
+                       <div class="col" >
+                           <h3 class="text-primary text-center">Forgot Password</h3>
+                       </div>
+                   </div>
+                   <div id="fp"> 
+                   
+                  </div>
+                   <div>
+                       <label for="forgotemail" class="form-label">Email</label>
+                       <input type="text" name='forgotemail' class="form-control" id="forgotemail">
+                   </div>
+                   <div>
+                       <button type="submit" name='forgototp' id="sendotp" class="btn btn-primary forgototp form-control d-flex justify-content-center">Send OTP</button>
+                   </div>
+                   <div class="form-text text-end pe-3"><a href="#"  class="text-primary forgotlogin">log in</a></div>
                </form>
            </div>
         </div>
