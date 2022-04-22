@@ -145,6 +145,33 @@ if(isset($_SESSION['id']))
            </div>
         </div>
     </div>
+
+    <!-- Enter OTP -->
+    <div class="container-fluid outerdiv">
+       <div class="row">
+           <div class="col mx-auto formcol">
+               <form class="signupform" id='fotp'>
+                   <button type="button" class="btn-close" aria-label="Close"></button>
+                   <div class="row">
+                       <div class="col" >
+                           <h3 class="text-primary text-center">OTP</h3>
+                       </div>
+                   </div>
+                   <div id="smsotp"> 
+                   
+                  </div>
+                   <div>
+                       <label for="otp" class="form-label">Enter OTP</label>
+                       <input type="text" name='otp' class="form-control" id="otp">
+                   </div>
+                   <div>
+                       <button type="submit" name='submitotp' id="submitotp" class="btn btn-primary submitotp form-control d-flex justify-content-center">Submit</button>
+                   </div>
+                   <div class="form-text text-end pe-3"><a href="#"  class="text-primary forgotloginotp">log in</a></div>
+               </form>
+           </div>
+        </div>
+    </div>
       
         <!-- carousel -->
       <div class="row " id="carousel">

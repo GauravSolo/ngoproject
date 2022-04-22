@@ -51,20 +51,27 @@ var swiper = new Swiper(".mySwiper", {
  document.querySelector('.outerdiv').style = `height:${scrollableheight}px;`;
 
 
- var [signupmodal, loginmodal, forgotmodal] = [...document.querySelectorAll('.outerdiv')];
+ var [signupmodal, loginmodal, forgotmodal, enterotp] = [...document.querySelectorAll('.outerdiv')];
  var [login, signup] = [...document.querySelectorAll('.logbutton')];
 
  let forgotbtn = document.querySelector('.forgotbtn');
  let forgotlogin = document.querySelector('.forgotlogin');
+ let forgotloginotp = document.querySelector('.forgotloginotp');
  
  forgotbtn.addEventListener('click', ()=>{
   loginmodal.classList.remove('modal');
   forgotmodal.classList.add('modal');
-})
- forgotlogin.addEventListener('click', ()=>{
-  loginmodal.classList.add('modal');
-  forgotmodal.classList.remove('modal');
-})
+});
+
+  forgotlogin.addEventListener('click', ()=>{
+        loginmodal.classList.add('modal');
+        forgotmodal.classList.remove('modal');
+  });
+  forgotloginotp.addEventListener('click', ()=>{
+    loginmodal.classList.add('modal');
+    enterotp.classList.remove('modal');
+  });
+
  login.addEventListener('click',()=>{
 
     loginmodal.classList.add('modal');
@@ -140,7 +147,7 @@ var frame = document.querySelector('.src');
           if(!umail || !upass || !uname)
           {
               sm.innerHTML="<div class='alert alert-warning m-0' role='alert'>Please fill require input!</div>";
-              setTimeout(()=>{sm.innerHTML=""},1500);
+              setTimeout(()=>{sm.innerHTML="";},1500);
 
             return;
           }
@@ -156,7 +163,7 @@ var frame = document.querySelector('.src');
                   var res = xhr.response;
                   // console.log(res);
                   sm.innerHTML = res.res;
-                  setTimeout(()=>{sm.innerHTML=""},5000);
+                  setTimeout(()=>{sm.innerHTML="";},5000);
   				  document.querySelector("button[name='signupsubmit']").innerHTML="Submit";
                   document.querySelector("input[name='inputusername']").value = "";
                   document.querySelector("input[name='inputemail']").value = "";
@@ -185,7 +192,7 @@ var frame = document.querySelector('.src');
                   if(!umail || !upass)
                   {
                       lm.innerHTML="<div class='alert alert-warning m-0' role='alert'>Please fill all input!</div>";
-                      setTimeout(()=>{lm.innerHTML=""},1500);
+                      setTimeout(()=>{lm.innerHTML="";},1500);
                   }
 
                       const xhr = new XMLHttpRequest();
@@ -199,7 +206,7 @@ var frame = document.querySelector('.src');
                               var res = xhr.response;
                               lm.innerHTML = res.res;
                               setTimeout(()=>{
-                                lm.innerHTML=""
+                                lm.innerHTML="";
                                 if(res.ok == '1')
                                   window.location.href = 'admin/index.php';
                               },1000);
@@ -233,11 +240,11 @@ var frame = document.querySelector('.src');
 
 
 
-      var myCarousel = document.querySelector('#myCarousel');
-      var carousel = new bootstrap.Carousel(myCarousel, {
-        interval: 1000,
-        wrap: true
-      });
+      // var myCarousel = document.querySelector('#myCarousel');
+      // var carousel = new bootstrap.Carousel(myCarousel, {
+      //   interval: 1000,
+      //   wrap: true
+      // });
 
 
       let scrollToBottom = document.querySelector("#about");
@@ -247,7 +254,11 @@ var frame = document.querySelector('.src');
         pageBottom.scrollIntoView()
       });
 
-console.log('clicked');
+
+
+
+
+      
 let fp = document.querySelector('#fp');
 let forgototp = document.querySelector('#sendotp');
 forgototp.addEventListener('click',(e)=>{
@@ -260,7 +271,7 @@ forgototp.addEventListener('click',(e)=>{
         if(umail === '')
         {
             fp.innerHTML="<div class='alert alert-warning m-0' role='alert'>Please Enter Email!</div>";
-            setTimeout(()=>{fp.innerHTML=""},1500);
+            setTimeout(()=>{fp.innerHTML="";},1500);
             return;
         }
         forgototp.innerHTML = `
@@ -277,21 +288,27 @@ forgototp.addEventListener('click',(e)=>{
                 if(xhr.status === 200)
                 {
                     var res = xhr.response;
-                    fp.innerHTML = res.res;
-                    setTimeout(()=>{
-                      fp.innerHTML=""
-                      // if(res.ok == '1')
-                      //   window.location.href = 'admin/index.php';
-                    },1000);
 
                     if(res.error == '0'){
                       console.log(res.error, res.res);
+                      sendotp(umail,res.res);
                     }else if(res.error == '1'){
                       console.log(res.error, res.res);
+
+                       fp.innerHTML = res.res;
+                      setTimeout(()=>{
+                        fp.innerHTML="";
+                      },4000);
+                      forgototp.innerHTML = `Send OTP`;
                     }else if(res.error == '2'){
                       console.log(res.error, res.res);
+
+                      fp.innerHTML = res.res;
+                      setTimeout(()=>{
+                        fp.innerHTML="";
+                      },4000);
+                      forgototp.innerHTML = `Send OTP`;
                     }
-                    forgototp.innerHTML = `Send OTP`;
                 }
             };
             
@@ -300,3 +317,134 @@ forgototp.addEventListener('click',(e)=>{
             formdata.append('forgotemail',umail);
             xhr.send(formdata);
 });
+
+
+function sendotp(mail,username)
+{
+
+  const xhr = new XMLHttpRequest();
+
+  xhr.open('POST','mail.php',true);
+  xhr.responseType = 'json';
+  xhr.onload = ()=>{
+      if(xhr.status === 200)
+      {
+          var res = xhr.response;
+
+          if(res.error == '0'){
+            console.log(res.error, res.res);
+            fp.innerHTML = res.res;
+
+            setTimeout(()=>{
+              fp.innerHTML="";
+              forgotmodal.classList.remove('modal');
+              enterotp.classList.add('modal');
+            },4000);
+          }else if(res.error == '1'){
+            console.log(res.error, res.res);
+             fp.innerHTML = res.res;
+
+            setTimeout(()=>{
+              fp.innerHTML="";
+            },4000);
+          }else if(res.error == '2'){
+            console.log(res.error, res.res);
+            fp.innerHTML = res.res;
+
+            setTimeout(()=>{
+              fp.innerHTML="";
+            },4000);
+          }else if(res.error == '3'){
+            console.log(res.error, res.res);
+            fp.innerHTML = res.res;
+
+            setTimeout(()=>{
+              fp.innerHTML="";
+            },4000);
+          }
+          forgototp.innerHTML = `Send OTP`;
+      }
+  };
+  
+  // const form = document.getElementById('fpwd');
+  const formdata = new FormData();
+  formdata.append('mail',mail);
+  formdata.append('username',username);
+  xhr.send(formdata);
+}
+
+
+
+
+
+let smsotp = document.querySelector('#smsotp');
+let submitotp = document.querySelector('#submitotp');
+submitotp.addEventListener('click',(e)=>{
+  e.preventDefault();
+  console.log('clicked');
+
+  
+        var otp = document.querySelector("input[name='otp']").value;
+        document.querySelector("input[name='otp']").value = '';
+        if(otp === '')
+        {
+            smsotp.innerHTML="<div class='alert alert-warning m-0' role='alert'>Please Enter OTP!</div>";
+            setTimeout(()=>{smsotp.innerHTML="";},1500);
+            return;
+        }
+        submitotp.innerHTML = `
+        <div class="spinner-border" style="width:24px;height:24px; white-space:nowrap;" role="status">
+       <span class="visually-hidden" >Loading...</span>
+       </div>
+       <div class="ms-3" style="font-size:20px;">Loading...</div>
+       `;
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST','checkotp.php',true);
+            xhr.responseType = 'json';
+            xhr.onload = ()=>{
+                if(xhr.status === 200)
+                {
+                    var res = xhr.response;
+
+                    if(res.error == '0'){
+                      console.log(res.error, res.res);
+
+                      smsotp.innerHTML = res.res;
+                      setTimeout(()=>{
+                        smsotp.innerHTML="";
+                        window.location.href = 'admin/index.php';
+                      },4000);
+                    }else if(res.error == '1'){
+                      console.log(res.error, res.res);
+
+                       smsotp.innerHTML = res.res;
+                      setTimeout(()=>{
+                        smsotp.innerHTML="";
+                      },4000);
+                    }else if(res.error == '2'){
+                      console.log(res.error, res.res);
+
+                      smsotp.innerHTML = res.res;
+                      setTimeout(()=>{
+                        smsotp.innerHTML="";
+                      },4000);
+                    }else if(res.error == '3'){
+                      console.log(res.error, res.res);
+
+                      smsotp.innerHTML = res.res;
+                      setTimeout(()=>{
+                        smsotp.innerHTML="";
+                      },4000);
+                    }
+                    submitotp.innerHTML = `Submit`;
+                }
+            };
+            
+            // const form = document.getElementById('fpwd');
+            const formdata = new FormData();
+            formdata.append('otp',otp);
+            xhr.send(formdata);
+});
+
+
