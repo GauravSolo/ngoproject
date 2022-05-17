@@ -163,6 +163,7 @@ if(isset($_SESSION['id']))
                    <div>
                        <label for="otp" class="form-label">Enter OTP</label>
                        <input type="text" name='otp' class="form-control" id="otp">
+                       <span class="me-2 my-2 text-primary float-end" id="timer">05 : 00</span>
                    </div>
                    <div>
                        <button type="submit" name='submitotp' id="submitotp" class="btn btn-primary submitotp form-control d-flex justify-content-center">Submit</button>
@@ -204,7 +205,7 @@ if(isset($_SESSION['id']))
                                   ?>
                                   <li class="nav-item me-sm-3 forum">
                                     <a class="nav-link position-relative" id="sign" href="<?php echo isset($_SESSION['id'])?'admin/index.php?chat=1':'#';?>">
-                                        Forum
+                                        Chat
                                         <span class="position-absolute top-0 start-md-100 translate-middle badge rounded-pill bg-danger" style="font-size:.5rem;">
                                           new
                                         </span>      
@@ -411,7 +412,7 @@ if(isset($_SESSION['id']))
             </div>
             <div class="info">
                 <div class="desc">
-                  <h2>Gajendra</h2>
+                  <h2>Anon</h2>
                     <span>Worker</span>
                 </div>
                 <div class="links">

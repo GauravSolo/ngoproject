@@ -70,6 +70,7 @@ var swiper = new Swiper(".mySwiper", {
   forgotloginotp.addEventListener('click', ()=>{
     loginmodal.classList.add('modal');
     enterotp.classList.remove('modal');
+    timer.innerHTML="05 : 00";
   });
 
  login.addEventListener('click',()=>{
@@ -339,7 +340,8 @@ function sendotp(mail,username)
               fp.innerHTML="";
               forgotmodal.classList.remove('modal');
               enterotp.classList.add('modal');
-            },4000);
+              settimer();
+            },2000);
           }else if(res.error == '1'){
             console.log(res.error, res.res);
              fp.innerHTML = res.res;
@@ -389,7 +391,7 @@ submitotp.addEventListener('click',(e)=>{
         if(otp === '')
         {
             smsotp.innerHTML="<div class='alert alert-warning m-0' role='alert'>Please Enter OTP!</div>";
-            setTimeout(()=>{smsotp.innerHTML="";},1500);
+            setTimeout(()=>{smsotp.innerHTML="";},1000);
             return;
         }
         submitotp.innerHTML = `
@@ -448,3 +450,53 @@ submitotp.addEventListener('click',(e)=>{
 });
 
 
+const timer = document.getElementById('timer');
+
+var min,sec,timeup=false;
+
+function settimer()
+{
+  var countdown = setInterval(()=>{
+    [min,sec] = timer.innerText.split(":");
+    min = parseInt(min);
+    sec = parseInt(sec);
+    console.log(min,sec);
+    if(sec  == 0){
+      if(min > 0)
+      {
+        sec = 59;
+        min--;
+      }else{
+        timeup = true;
+      }
+    }else{
+      sec--;
+    }
+  
+    if(sec < 10)
+     sec = '0'+sec;
+  
+    if(min < 10)
+     min = '0'+min;
+  
+  
+     timer.innerHTML = min+" : "+sec;
+     if(timeup)
+     {
+      clearInterval(countdown);
+      setTimeout(() => {
+        timer.innerHTML = `<a href="#" onclick="sendagain()">Try again</a>`;
+        timeup = false;
+      }, 1000);
+     }
+  
+  },1000)
+}
+
+function sendagain()
+{
+              timer.innerHTML="05 : 00";
+              fp.innerHTML="";
+              forgotmodal.classList.add('modal');
+              enterotp.classList.remove('modal');
+}
