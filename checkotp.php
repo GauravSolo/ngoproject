@@ -38,7 +38,7 @@
                     echo json_encode(array('error' => '0', 'res' => "<div class='alert alert-success m-0' role='alert'>Hi, {$row['username']}!<br/>You've successfully logged in.</div>"));
 
                 }else{
-                    echo json_encode(array('error' => '3', 'res' => "<div class='alert alert-danger m-0' role='alert'>Hi, {$row['username']}!<br/>You can not log in.Try After some time!</div>"));
+                    echo json_encode(array('error' => '3', 'res' => "<div class='alert alert-danger m-0' role='alert'>Hi, {$row['username']}!<br/>You can't log in.Try After some time!</div>"));
                 }
 
 

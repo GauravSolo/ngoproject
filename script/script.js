@@ -71,6 +71,7 @@ var swiper = new Swiper(".mySwiper", {
     loginmodal.classList.add('modal');
     enterotp.classList.remove('modal');
     timer.innerHTML="05 : 00";
+    tryagain.innerHTML="";
   });
 
  login.addEventListener('click',()=>{
@@ -340,6 +341,7 @@ function sendotp(mail,username)
               fp.innerHTML="";
               forgotmodal.classList.remove('modal');
               enterotp.classList.add('modal');
+              timer.innerHTML="05 : 00";
               settimer();
             },2000);
           }else if(res.error == '1'){
@@ -451,6 +453,7 @@ submitotp.addEventListener('click',(e)=>{
 
 
 const timer = document.getElementById('timer');
+const tryagain =document.getElementById('tryagain');
 
 var min,sec,timeup=false;
 
@@ -485,7 +488,8 @@ function settimer()
      {
       clearInterval(countdown);
       setTimeout(() => {
-        timer.innerHTML = `<a href="#" onclick="sendagain()">Try again</a>`;
+        timer.innerHTML = "";
+        tryagain.innerHTML = `<a href="#" onclick="sendagain()">Try again</a>`;
         timeup = false;
       }, 1000);
      }
@@ -495,8 +499,7 @@ function settimer()
 
 function sendagain()
 {
-              timer.innerHTML="05 : 00";
-              fp.innerHTML="";
-              forgotmodal.classList.add('modal');
-              enterotp.classList.remove('modal');
+  fp.innerHTML="";
+  forgotmodal.classList.add('modal');
+  enterotp.classList.remove('modal');
 }

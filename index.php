@@ -161,9 +161,12 @@ if(isset($_SESSION['id']))
                    
                   </div>
                    <div>
+                       <div class="d-flex justify-content-between align-items-center">
                        <label for="otp" class="form-label">Enter OTP</label>
+                       <span class="me-2 mt-2 text-primary" id="timer">05 : 00</span>
+                       </div>
                        <input type="text" name='otp' class="form-control" id="otp">
-                       <span class="me-2 my-2 text-primary float-end" id="timer">05 : 00</span>
+                       <span class="me-2 my-2 text-primary float-end" id="tryagain"> </span>
                    </div>
                    <div>
                        <button type="submit" name='submitotp' id="submitotp" class="btn btn-primary submitotp form-control d-flex justify-content-center">Submit</button>
